@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodima - Recipes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Foodima</div>
+            <ul>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#" class="active">Recipes</a></li>
+                <li><a href="#">Hotline</a></li>
+            </ul>
+            <div class="auth">
+                <a href="#">Log in</a>
+                <button onclick="window.location.href='signup.html'">Sign up</button>
+            </div>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Recipe Contest</h1>
+            <p>Recipe contests are like our big, <br>constantly-in-progress dinner party—and you're invited.</p>
+            <a href="#">How they work →</a>
+        </div>
+        <div class="image-container">
+            <img src="contest.png" alt="Chef Illustration">
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="filter-section">
+            <h3>Filter by:</h3>
+            <div class="filter-group">
+                <label><input type="checkbox" class="filter" value="Contest Winners"> Contest Winners</label><br>
+                <label><input type="checkbox" class="filter" value="Featured"> Featured</label><br>
+                <label><input type="checkbox" class="filter" value="Test Kitchen-Approved"> Test Kitchen-Approved</label>
+            </div>
+        </div>
+        
+        <!-- <div class="filter-section">
+            <h3>Meals:</h3>
+            <div class="ilter-group">
+                <label><input type="checkbox" class="filter" value="Breakfast"> Breakfast</label><br>
+                <label><input type="checkbox" class="filter" value="Lunch"> Lunch</label><br>
+                <label><input type="checkbox" class="filter" value="Dinner"> Dinner</label><br>
+                <label><input type="checkbox" class="filter" value="Desserts"> Desserts</label>
+            </div>
+        </div> -->
+
+
+        
+        <div class="content-section">
+            <div class="search-sort">
+                <input type="text" id="searchBar" placeholder="Search recipes and more...">
+                
+                <select id="sortOptions">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+            
+                <select id="sortRatings">
+                    <option value="highest">Highest Rated</option>
+                    <option value="lowest">Lowest Rated</option>
+                </select>
+            </div>
+
+
+            <div class="recipe-grid">
+                <div class="recipe-card" data-category="Contest Winners" data-date="2024-02-15" data-rating="4.5">
+                    <img src="raspberry.jpg" alt="Raspberry-Raspberry Shortcakes" height="100px" width="1000px">
+                    <h3>Raspberry-Raspberry Shortcakes</h3>
+                    <p>by SARAH JAFFEL</p>
+                </div>
+                <div class="recipe-card" data-category="Featured" data-date="2023-02-15" data-rating="5">
+                    <img src="david.png" alt="David Lebovitz's Cherry Clafoutis">
+                    <h3>David Lebovitz's Cherry Clafoutis</h3>
+                    <p>by DAVID LEBOVITZ</p>
+                </div>
+                <div class="recipe-card" data-category="Test Kitchen-Approved" data-date="2024-12-15" data-rating="4.1">
+                    <img src="chica.png" alt="Chicharrones-Encrusted Avocado">
+                    <h3>Chicharrones-Encrusted Avocado</h3>
+                    <p>by MISS APPETIT</p>
+                </div>
+
+ 
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+    
+</body>
+</html>

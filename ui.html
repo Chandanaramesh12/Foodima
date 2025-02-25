@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodima - Recipes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .filter-section {
+            width: 20%;
+        }
+
+        .content-section {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-sort {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .recipe-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .recipe-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .recipe-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .recipe-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Foodima</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h3>Filter by:</h3>
+            <div class="filter-group">
+                <label><input type="checkbox" class="filter" value="Contest Winners"> Contest Winners</label><br>
+                <label><input type="checkbox" class="filter" value="Featured"> Featured</label><br>
+                <label><input type="checkbox" class="filter" value="Test Kitchen-Approved"> Test Kitchen-Approved</label>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="content-section">
+            <div class="search-sort">
+                <input type="text" id="searchBar" placeholder="Search recipes...">
+                <select id="sortOptions">
+                    <option value="newest">Sort by: Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+                <select id="sortRatings">
+                    <option value="highest">Sort by: Highest Rating</option>
+                    <option value="lowest">Lowest Rating</option>
+                </select>
+            </div>
+
+            <div class="recipe-grid">
+                <div class="recipe-card" data-category="Contest Winners" data-date="2024-02-15" data-rating="4.5">
+                    <img src="raspberry.jpg" alt="Raspberry Shortcakes">
+                    <h3>Raspberry Shortcakes</h3>
+                    <p>by SARAH JAFFEL</p>
+                </div>
+                <div class="recipe-card" data-category="Featured" data-date="2023-02-15" data-rating="5">
+                    <img src="david.png" alt="Cherry Clafoutis">
+                    <h3>Cherry Clafoutis</h3>
+                    <p>by DAVID LEBOVITZ</p>
+                </div>
+                <div class="recipe-card" data-category="Test Kitchen-Approved" data-date="2024-12-15" data-rating="4.1">
+                    <img src="chica.png" alt="Avocado">
+                    <h3>Chicharrones-Encrusted Avocado</h3>
+                    <p>by MISS APPETIT</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sortDateSelect = document.getElementById("sortOptions");
+            const sortRatingSelect = document.getElementById("sortRatings");
+            const filterCheckboxes = document.querySelectorAll(".filter");
+            const searchBar = document.getElementById("searchBar");
+            const recipeGrid = document.querySelector(".recipe-grid");
+
+            function updateRecipes() {
+                let recipes = Array.from(document.querySelectorAll(".recipe-card"));
+                const selectedFilters = Array.from(filterCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value.toLowerCase());
+                const searchQuery = searchBar.value.toLowerCase();
+
+                // Step 1: Filter recipes based on checkboxes & search
+                let visibleRecipes = recipes.filter(recipe => {
+                    const category = recipe.getAttribute("data-category").toLowerCase();
+                    const recipeName = recipe.querySelector("h3").textContent.toLowerCase();
+                    const matchesFilter = selectedFilters.length === 0 || selectedFilters.includes(category);
+                    const matchesSearch = searchQuery === "" || recipeName.includes(searchQuery);
+                    return matchesFilter && matchesSearch;
+                });
+
+                // Step 2: Sort filtered recipes
+                if (sortDateSelect.value === "newest") {
+                    visibleRecipes.sort((a, b) => new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date")));
+                } else if (sortDateSelect.value === "oldest") {
+                    visibleRecipes.sort((a, b) => new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date")));
+                }
+
+                if (sortRatingSelect.value === "highest") {
+                    visibleRecipes.sort((a, b) => parseFloat(b.getAttribute("data-rating")) - parseFloat(a.getAttribute("data-rating")));
+                } else if (sortRatingSelect.value === "lowest") {
+                    visibleRecipes.sort((a, b) => parseFloat(a.getAttribute("data-rating")) - parseFloat(b.getAttribute("data-rating")));
+                }
+
+                // Step 3: Update UI
+                recipeGrid.innerHTML = "";
+                visibleRecipes.forEach(recipe => recipeGrid.appendChild(recipe));
+            }
+
+            // Attach event listeners
+            sortDateSelect.addEventListener("change", updateRecipes);
+            sortRatingSelect.addEventListener("change", updateRecipes);
+            filterCheckboxes.forEach(checkbox => checkbox.addEventListener("change", updateRecipes));
+            searchBar.addEventListener("input", updateRecipes);
+
+            // Initial update
+            updateRecipes();
+        });
+    </script>
+
+</body>
+</html>
